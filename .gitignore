@@ -1,0 +1,5 @@
+#ignoring .root file
+.root
+\#*
+
+*~
