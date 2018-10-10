@@ -23,7 +23,7 @@
 	}
   else
 	{
-	  ofstream output("initialestimates.dat",ios::app);
+	  ofstream output("finalestimates.dat",ios::app);
 	  double Amplitude,mean,SD,xmin,xmax;
 	  cout<<"Enter A, m , SD, xmin, xmax"<<endl;
 	  cin>>Amplitude>>mean>>SD>>xmin>>xmax;
