@@ -109,7 +109,7 @@
   ///////%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%555/////////////////////////////////////
  //Storing the Gaussian mean and Number of Counts in Peak based on fit parametes%%%%%%%%%%%%%%%555555///
   
- ofstream myfile("finalerrordata.dat");
+ ofstream myfile("initialestimates.dat");
  const double binWidth=histo->GetBinWidth(1);
  if(myfile.is_open())
  {
