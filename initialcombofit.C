@@ -101,8 +101,8 @@
   myfile<<fixed<<setprecision(2);
      for(int i=0;i<peakNo;i++)
        {
-         myfile<< f[i]->GetParameter(0)<<'\t'<<f[i]->GetParameter(1)<<'\t'<<f[i]->GetParameter(2)<<'\t'<<f[i]->GetParError(0)
-			   <<'\t'<<f[i]->GetParError(1)<<'\t'<<f[i]->GetParError(2)<<'\t'<<f[i]->GetParameter(0)/binWidth<<endl;
+         myfile<<setw(10)<< f[i]->GetParameter(0)<<setw(12)<<f[i]->GetParameter(1)<<setw(12)<<f[i]->GetParameter(2)<<setw(12)<<f[i]->GetParError(0)
+			   <<setw(12)<<f[i]->GetParError(1)<<setw(12)<<f[i]->GetParError(2)<<setw(12)<<f[i]->GetParameter(0)/binWidth<<endl;
        }
      cout<<"successfully stored output data in the file "<<outputfile<<endl;
      myfile.close();
