@@ -1,22 +1,32 @@
 {
+  //Files for storing data file
+  char * filename="initial.root"; //access the original histogram
+  char * allhistogramsfile="allhistogram.root";
+  char  file_estimated_parameters[]="initialestimates.dat"; //file storing the estimated parameters for fit
+  char  outputfile[] ="initialEnergyerror.dat";
+  const  int peakNo=23;
+  const  int column=6;
+  int row=peakNo/column+1;
+  
   //Defining the array to read the paramertes
-const  int peakNo=23;
   double firstParameter[peakNo]={};
   double secondParameter[peakNo]={};
   double thirdParameter[peakNo]={};
   double firstLimit[peakNo]={};
   double secondLimit[peakNo]={};
-  //double firstParameter[peakNo],secondParameter[peakNo],thirdParameter[peakNo],firstLimit[peakNo],secondLimit[peakNo];
-  ifstream datafile("initialestimates.dat"); //File containing the estimated fit parameters
+
+  //Checking if data file with estimated parameters are opened
+  ifstream datafile(file_estimated_parameters); //File containing the estimated fit parameters
   if(datafile.is_open())
 	{
-	  cout<<" File reading for estimated parameters done successfully"<<endl;
+	  cout<<" File reading for estimated parameters is done successfully from the file "<<file_estimated_parameters<<endl;
 	  int peakCount=0;
 	  while(peakCount<=peakNo)
 		{
 		  datafile>>firstParameter[peakCount]>>secondParameter[peakCount]>>thirdParameter[peakCount]>>firstLimit[peakCount]>>secondLimit[peakCount];
 		  peakCount++;
 		}
+	  datafile.close();
 	}
   else
 	{
@@ -26,16 +36,24 @@ const  int peakNo=23;
 
   //Creating the canvas and rootfile to store different histograms 
   TCanvas *c = new TCanvas("c","Histogram",500,700);
-  //  char * root_file="initial.root";
-  TFile *file=new TFile("allhistograms.root","RECREATE"); //Root file to store the histograms
-
+  c->SetGrid();
+  c->Divide(column,row);
+  TFile *file=new TFile(allhistogramsfile,"RECREATE");
+  //checking if Tfile is opened scuccessfully
+  if(file->IsOpen())cout<<"Successfully created a file "<<allhistogramsfile<< " to store all histograms with fit"<<endl;
+  else
+    {
+	cout<<"Unable to open the file "<<allhistogramsfile<< endl;
+	return 0;
+    }
+  //array for histogram and functions
   TF1 * f[peakNo];
-  TH1F * h[peakNo]; //Array of histograms
-  //Reading the histogram from rootfile
-  //  char * filename="initial.root";
-  TFile *MyFile = new TFile("initial.root","READ");
-  if(MyFile->IsOpen())cout<<" file opened successfully\n";
-  TH1F *his = (TH1F*)MyFile->Get("histo");
+  TH1F * h[peakNo];
+
+  //Checking if TFiles is opened successfully
+  TFile *MyFile = new TFile(filename,"READ");
+  if(MyFile->IsOpen())cout<<filename<<" file opened successfully\n";
+  TH1F *his = (TH1F*)MyFile->Get("histo"); //histo is the name of histogram stored in MyFile
   
   for(int i=0;i<peakNo;i++)
     {
@@ -47,25 +65,35 @@ const  int peakNo=23;
 	cout<<endl;
       c->cd(i+1);
 	h[i]=(TH1F*)his->Clone(Form("h%d",i+1));
-	//	h[i]=(TH1F*)MyFile->Get("histo");
       h[i]->GetXaxis()->SetTitle("Energy(keV)");
       h[i]->GetXaxis()->CenterTitle();
       h[i]->GetYaxis()->SetTitle("Counts/Channel");
       h[i]->GetYaxis()->CenterTitle();
       h[i]->Fit(f[i],"rem+","",firstLimit[i],secondLimit[i]);
-   	h[i]->Sumw2();
-	gStyle->SetOptStat(1000000001);
-      gStyle->SetOptFit(1111);
+	gStyle->SetOptStat("n");//Name of histogram
 	h[i]->Draw();
-	  // histo->Draw();
-	file->cd();
+   	h[i]->Sumw2();
+	TPaveStats* stat =(TPaveStats*)h[i]->FindObject("stats");
+	stat->SetOptFit(1111);
+	// Set stat options
+	gStyle->SetStatY(0.9);                
+	// Set y-position (fraction of pad size)
+	gStyle->SetStatX(0.9);                
+	// Set x-position (fraction of pad size)
+	gStyle->SetStatW(0.2);                
+	// Set width of stat-box (fraction of pad size)
+	gStyle->SetStatH(0.4);                
+	// Set height of stat-box (fraction of pad size)
+	c->Update();
+	c->Modified();
+     	file->cd();
 	h[i]->Write();
     }
 
-  ///////%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%555/////////////////////////////////////
- //Storing the Gaussian mean and Number of Counts in Peak based on fit parametes%%%%%%%%%%%%%%%555555///
+  ///////%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%/////////////////////////////////////
+
   
- ofstream myfile("initialEnergyerror");
+ ofstream myfile(outputfile);
  const double binWidth=his->GetBinWidth(1);
  if(myfile.is_open())
  {
@@ -76,10 +104,11 @@ const  int peakNo=23;
          myfile<< f[i]->GetParameter(0)<<'\t'<<f[i]->GetParameter(1)<<'\t'<<f[i]->GetParameter(2)<<'\t'<<f[i]->GetParError(0)
 			   <<'\t'<<f[i]->GetParError(1)<<'\t'<<f[i]->GetParError(2)<<'\t'<<f[i]->GetParameter(0)/binWidth<<endl;
        }
-     cout<<"successfully stored gaussian mean and Number of events in \"finalerror.dat\""<<endl;
+     cout<<"successfully stored output data in the file "<<outputfile<<endl;
+     myfile.close();
  }
- else cout<<"unable to open the file \"finalerror.dat\" " <<endl;
- //file->Close(); 
- //}
- //gROOT->ProcessLine(".x plotTabulatedvsCalculated.C");
-}
+ else cout<<"unable to open the file "<<outputfile <<endl;
+ //Closing the root file
+ delete  file;
+ delete  MyFile;
+ }
