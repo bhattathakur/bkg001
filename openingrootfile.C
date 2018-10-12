@@ -1,8 +1,8 @@
 {
-  int  answer=0;
+  /* int  answer=0;
   cout<<"Check Peak or store data (1/2)"<<endl;
   cin>>answer;
-  if(answer==1)
+  if(answer==1)*/
 	{
   
 	 const char * filename="final.root";

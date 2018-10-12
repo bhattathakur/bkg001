@@ -1,11 +1,11 @@
 {
-  const char * datafile="E_estandE_true.dat"; //File storing the estimated and true energy and their errors
+  const char * filedata="E_estandE_true.dat"; //File storing the estimated and true energy and their errors
   const char * rootfile="true_estimated_enregyplot.root"; //root file to save the plot
-  string filename="slope_intercept.dat"; //file to store slope and intercept of plot
+  const char * filename="slope_intercept.dat"; //file to store slope and intercept of plot
   c=new TCanvas();
   c->SetGrid();
   c->SetFillColor(29);
-  graph_expected=new TGraphErrors(datafile,"%lg%lg%lg","");//E-calc,E-true,errorE-Calc,errorE-true
+  graph_expected=new TGraphErrors(filedata,"%lg%lg%lg%lg","");//E-calc,E-true,errorE-Calc,errorE-true
   graph_expected->SetTitle("E_{true} vs  E_{estimated}  Plot;E_{true}(eV);E_{estimated}(eV);");
   graph_expected->GetYaxis()->SetTitleOffset(1.2);
   graph_expected->SetMarkerColor(4);

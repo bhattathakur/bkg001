@@ -1,7 +1,7 @@
 {
   //Files for storing data file
   char * filename="initial.root"; //access the original histogram
-  char * allhistogramsfile="allhistogram.root";
+  char * allhistogramsfile="initial_allhistogram.root";
   char  file_estimated_parameters[]="initialestimates.dat"; //file storing the estimated parameters for fit
   char  outputfile[] ="initialEnergyerror.dat";
   const  int peakNo=23;
@@ -89,7 +89,8 @@
      	file->cd();
 	h[i]->Write();
     }
-
+  // filename.close();
+  //delete filename;
   ///////%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%/////////////////////////////////////
 
   
@@ -109,6 +110,7 @@
  }
  else cout<<"unable to open the file "<<outputfile <<endl;
  //Closing the root file
- delete  file;
+ //xdelete  filename;
+ // filename.close();
  delete  MyFile;
  }

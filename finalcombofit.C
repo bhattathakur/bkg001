@@ -3,7 +3,7 @@
   char * filename="final.root"; //access the original histogram
   char * allhistogramsfile="final_allhistogram.root";
   char  file_estimated_parameters[]="finalestimates.dat"; //file storing the estimated parameters for fit
-  char  outputfile[] ="initialEnergyerror.dat"; //Output file to store A,u,6,eA,eu,e6
+  char  outputfile[] ="finalEnergyerror.dat"; //Output file to store A,u,6,eA,eu,e6
   const  int peakNo=23;
   const  int column=6;
   int row=peakNo/column+1;
