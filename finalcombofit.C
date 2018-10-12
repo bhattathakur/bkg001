@@ -1,9 +1,9 @@
 {
   //Files for storing data file
-  char * filename="final.root"; //access the original histogram
-  char * allhistogramsfile="final_allhistogram.root";
-  char  file_estimated_parameters[]="finalestimates.dat"; //file storing the estimated parameters for fit
-  char  outputfile[] ="finalEnergyerror.dat"; //Output file to store A,u,6,eA,eu,e6
+  char * filename="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/ROOT_FILES/final.root"; //access the original histogram
+  char * allhistogramsfile="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/ROOT_FILES/final_allhistogram.root";
+  char  file_estimated_parameters[]="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/finalestimates.dat"; //file storing the estimated parameters for fit
+  char  outputfile[] ="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/finalEnergyerror.dat"; //Output file to store A,u,6,eA,eu,e6
   const  int peakNo=23;
   const  int column=6;
   int row=peakNo/column+1;

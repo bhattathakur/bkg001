@@ -1,9 +1,10 @@
 {
   //Files for storing data file
-  char * filename="initial.root"; //access the original histogram
-  char * allhistogramsfile="initial_allhistogram.root";
-  char  file_estimated_parameters[]="initialestimates.dat"; //file storing the estimated parameters for fit
-  char  outputfile[] ="initialEnergyerror.dat";
+  const char * filename="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/ROOT_FILES/initial.root"; //access the original histogram
+  const char * allhistogramsfile="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/initial_allhistogram.root";
+  char  file_estimated_parameters[]="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/initialestimates.dat"; //file storing the estimated parameters for fit
+  char  outputfile[] ="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/initialEnergyerror.dat";
+  char initialcanvaspdf="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/PLOT/initialcanvas.pdf";
   const  int peakNo=23;
   const  int column=6;
   int row=peakNo/column+1;
@@ -30,7 +31,7 @@
 	}
   else
 	{
-	  cout<<"Error in reading the file  for estimated paramters"<<endl;
+	  cout<<"Error in reading the file"<<file_estimated_parameters<<"  for estimated paramters"<<endl;
 	  return 0;
 	}
 
@@ -87,8 +88,10 @@
 	c->Update();
 	c->Modified();
      	file->cd();
+	//c->SaveAs(initialcanvaspdf);
 	h[i]->Write();
     }
+  
   // filename.close();
   //delete filename;
   ///////%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%/////////////////////////////////////

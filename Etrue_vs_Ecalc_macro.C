@@ -1,10 +1,12 @@
 {
-  const char * filedata="E_estandE_true.dat"; //File storing the estimated and true energy and their errors
-  const char * rootfile="true_estimated_enregyplot.root"; //root file to save the plot
-  const char * filename="slope_intercept.dat"; //file to store slope and intercept of plot
+  
+  const char * filedata="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/E_estandE_true.dat"; //File storing the estimated and true energy and their errors
+  const char * rootfile="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/ROOT_FILES/true_estimated_enregyplot.root"; //root file to save the plot
+  const char * filename="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/slope_intercept.dat"; //file to store slope and intercept of plot
+  const char * pdfetrue="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/PLOTS/EtrueECalc.pdf"; //pdf file location
   c=new TCanvas();
   c->SetGrid();
-  c->SetFillColor(29);
+  c->SetFillColor(42);
   graph_expected=new TGraphErrors(filedata,"%lg%lg%lg%lg","");//E-calc,E-true,errorE-Calc,errorE-true
   graph_expected->SetTitle("E_{true} vs  E_{estimated}  Plot;E_{true}(eV);E_{estimated}(eV);");
   graph_expected->GetYaxis()->SetTitleOffset(1.2);
@@ -37,20 +39,20 @@
 //Saving the plot in root file
 file=new TFile(rootfile,"RECREATE");
  if(file->IsOpen())cout<<rootfile <<" opened successfully"<<endl;
+ c->SaveAs(pdfetrue);
 graph_expected->Write();
  c->Write();
 //c->Close();
- ofstream output(filename);
+ ofstream outputgraph(filename);
  double m1,c1; //slope , intercept
-  if(output.is_open())
+ if(outputgraph.is_open())
    {
-     output<<setw(10)<<  graph_expected->GetFunction("pol1")->GetParameter(0)<<setw(10)<<graph_expected->GetFunction("pol1")->GetParameter(1)<<endl;
+     outputgraph<<setw(10)<<  graph_expected->GetFunction("pol1")->GetParameter(0)<<setw(10)<<graph_expected->GetFunction("pol1")->GetParameter(1)<<endl;
      cout<<"Successfully stored intercept and slope in the file"<<filename<<endl;
-     
-     }
-  else
-    {
-	cout<<"Unable to open the file "<< filename<<endl;
-	return 0;
-    }
+   }
+ else
+   {
+     cout<<"Unable to open the file "<< filename<<endl;
+     return 0;
+   }
 } 

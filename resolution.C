@@ -1,10 +1,21 @@
 {
   //Data file containing final errors and parameters
-  const char * datafile="finalEnergyerror.dat";//A,mean,sigma,error in A,error in mean, error in sigma,N
+  char  dataafile[]="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/finalEnergyerror.dat";//A,mean,sigma,error in A,error in mean, error in sigma,N
+  char pdfresoluton[]="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/PLOTS/resolutionplot.pdf"; //pdf file to save the plot
+  ifstream inputres(dataafile);
+  if(inputres.is_open())
+    {
+	cout<<"successfully opend the file "<<dataafile<<endl;
+    }
+  else
+    {
+	cout<<"Unable to open the file "<<dataafile<<endl;
+    }
+  
   c=new TCanvas();
   c->SetGrid();
   c->SetFillColor(29);
-  graph_expected=new TGraphErrors(datafile,"%*lg%lg%lg%*lg%lg%lg%*lg","");//A,mean,sigma,error in A,error in mean, error in sigma,N
+  TGraphErrors *graph_expected=new TGraphErrors(dataafile,"%*lg%lg%lg%*lg%lg%lg%*lg","");//A,mean,sigma,error in A,error in mean, error in sigma,N
   graph_expected->SetTitle("Energy Resolution plot;E/#mu(eV);(#sigma);");
   graph_expected->SetMarkerColor(4);
   graph_expected->SetMarkerStyle(21);
@@ -30,6 +41,7 @@
   gStyle->SetLegendFont(12);
   gStyle->SetLegendFillColor(7);
   legend->Draw();
+  c->SaveAs(pdfresoluton);//Using as the pdf file for the plot
 
   const int E=1332;
   cout<<fixed<<setprecision(8);

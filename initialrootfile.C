@@ -11,8 +11,8 @@
   cout<<"correctedEmax = "<<correctedEmax<<endl;
 
   //Defining the files
-  const char * root_file="initial.root"; //for storing the histogram in root
-  const char * inputdatafile="bkg_001.dat";
+  const char * root_file="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/ROOT_FILES/initial.root"; //for storing the histogram in root
+  const char * inputdatafile="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/bkg_001.dat";
   
   TCanvas *c = new TCanvas("c","Histogram",500,700);
   TFile *file=new TFile(root_file,"RECREATE"); //Root file to store the histograms

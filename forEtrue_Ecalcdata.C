@@ -1,8 +1,8 @@
 {
   //Data File contaiing estimated energy and true energy
-  char input1[]="initialEnergyerror.dat"; //estimated 
-  char input2[]="tabulated_energy.dat"; //true
-  char output[]="E_estandE_true.dat";
+  char input1[]="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/initialEnergyerror.dat"; //estimated 
+  char input2[]="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/tabulated_energy.dat"; //true
+  char output[]="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/E_estandE_true.dat";
   ifstream file1(input1);
   ifstream file2(input2);
   if(file1.is_open())
