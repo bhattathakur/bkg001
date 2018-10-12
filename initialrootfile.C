@@ -9,18 +9,22 @@
   double correctedEmax=Emax*m1-b1;
   cout<<"correctedEmin = "<<correctedEmin<<endl;
   cout<<"correctedEmax = "<<correctedEmax<<endl;
+
+  //Defining the files
+    const char * root_file="initial.root";
+    string inputdatafile="bkg_001.dat";
   
   TCanvas *c = new TCanvas("c","Histogram",500,700);
-  char * root_file="initial.root";
   TFile *file=new TFile(root_file,"RECREATE"); //Root file to store the histograms
   TH1F *histo=new TH1F("histo","#font[22]{Calibrated Energy Spectrum}",numberOfChannels,correctedEmin,correctedEmax);
   // string inputfile="bkg_001.dat";
   
-   ifstream input("bkg_001.dat");
+   ifstream input(inputdatafile);
+   int nlines=0; //for counting the number of lines
    if(input.is_open())
 	 {
-	   Float_t x,y; //for storing the data in histogram
-	   Int_t nlines=0; //for counting the number of lines
+	   float x,y; //for storing the data in histogram
+	   
 	   while(1)
 		 {
 		   input>>x>>y; //Reading the data file into two columns
@@ -28,6 +32,7 @@
 		   histo->SetBinContent(x,y); //SetBinContent(bin,content)
 		   nlines++;
 		 }
+	   cout<<"Successfully read data file "<<inputdatafile<<" to create the histogram"<<endl;
 	   input.close();
 	 }
    else
@@ -35,7 +40,7 @@
 	   cout<<"Unable to open the data file to create energy spectrum"<<endl;
 	   return 0;
 	 }
-  printf("found %d lines\n",nlines);
+  cout<<"Total lines = "<<nlines<<endl;
   histo->GetXaxis()->SetTitle("Energy(keV)");
   histo->GetYaxis()->SetTitle("Counts/Channel");
   gStyle->SetOptStat(1000000001);//shows only name of the histogram

@@ -5,7 +5,7 @@
   if(answer==1)
 	{
   
-	  char * filename="initial.root";
+	 const char * filename="final.root";
 	  TFile *MyFile = new TFile(filename,"READ");
 	  if(MyFile->IsOpen())cout<<filename<<" file opened successfully\n";
 	  TH1F *h = (TH1F*)MyFile->Get("histo");
@@ -21,7 +21,7 @@
 	  gStyle->SetOptFit(1111);
 	  
 	}
-  else
+  /* else
 	{
 	  ofstream output("finalestimates.dat",ios::app);
 	  double Amplitude,mean,SD,xmin,xmax;
@@ -29,5 +29,5 @@
 	  cin>>Amplitude>>mean>>SD>>xmin>>xmax;
 	  output<<'\t'<<Amplitude<<'\t'<<mean<<'\t'<<SD<<'\t'<<xmin<<'\t'<<xmax<<endl;
 	  cout<<"successfully saved the data in the file "<<endl;
-	}
+	  }*/
     }
