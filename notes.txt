@@ -1,0 +1,4 @@
+Plotting the histogram from given data file
+Getting the fitting parameters from the initial data
+Compare the energy of peak with true energy plotting True-Energy vs Estimated Energy
+Finding the slope and y-intercept of the plot in 3
