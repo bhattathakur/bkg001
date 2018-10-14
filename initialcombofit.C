@@ -1,10 +1,10 @@
 {
   //Files for storing data file
-  const char * filename="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/ROOT_FILES/initial.root"; //access the original histogram
-  const char * allhistogramsfile="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/initial_allhistogram.root";
-  char  file_estimated_parameters[]="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/initialestimates.dat"; //file storing the estimated parameters for fit
-  char  outputfile[] ="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/initialEnergyerror.dat";
-  char initialcanvaspdf="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/PLOT/initialcanvas.pdf";
+  const char * filename="ROOT_FILES/initial.root"; //access the original histogram
+  const char * allhistogramsfile="ROOT_FILES/initial_allhistogram.root";
+  char  file_estimated_parameters[]="DATA/initialestimates.dat"; //file storing the estimated parameters for fit
+  char  outputfile[] ="DATA/initialEnergyerror.dat";
+  char initialcanvaspdf[]="PLOT/initialcanvas.pdf";
   const  int peakNo=23;
   const  int column=6;
   int row=peakNo/column+1;
@@ -36,12 +36,12 @@
 	}
 
   //Creating the canvas and rootfile to store different histograms 
-  TCanvas *c = new TCanvas("c","Histogram",500,700);
-  c->SetGrid();
-  c->Divide(column,row);
-  TFile *file=new TFile(allhistogramsfile,"RECREATE");
+  TCanvas *c1 = new TCanvas("c1","Histogram",500,700);
+  c1->SetGrid();
+  c1->Divide(column,row);
+  TFile *filee=new TFile(allhistogramsfile,"RECREATE");
   //checking if Tfile is opened scuccessfully
-  if(file->IsOpen())cout<<"Successfully created a file "<<allhistogramsfile<< " to store all histograms with fit"<<endl;
+  if(filee->IsOpen())cout<<"Successfully created a file "<<allhistogramsfile<< " to store all histograms with fit"<<endl;
   else
     {
 	cout<<"Unable to open the file "<<allhistogramsfile<< endl;
@@ -64,7 +64,7 @@
 	cout<<endl;
 	cout<<"########################  Peak "<<(i+1)<<"  #########################     "<<endl;
 	cout<<endl;
-      c->cd(i+1);
+      c1->cd(i+1);
 	h[i]=(TH1F*)his->Clone(Form("h%d",i+1));
       h[i]->GetXaxis()->SetTitle("Energy(keV)");
       h[i]->GetXaxis()->CenterTitle();
@@ -85,8 +85,8 @@
 	// Set width of stat-box (fraction of pad size)
 	gStyle->SetStatH(0.4);                
 	// Set height of stat-box (fraction of pad size)
-	c->Update();
-	c->Modified();
+	c1->Update();
+	c1->Modified();
      	file->cd();
 	//c->SaveAs(initialcanvaspdf);
 	h[i]->Write();

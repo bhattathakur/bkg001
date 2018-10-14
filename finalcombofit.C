@@ -1,9 +1,9 @@
 {
   //Files for storing data file
-  char * filename="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/ROOT_FILES/final.root"; //access the original histogram
-  char * allhistogramsfile="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/ROOT_FILES/final_allhistogram.root";
-  char  file_estimated_parameters[]="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/finalestimates.dat"; //file storing the estimated parameters for fit
-  char  outputfile[] ="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/finalEnergyerror.dat"; //Output file to store A,u,6,eA,eu,e6
+  const char * filname="ROOT_FILES/final.root"; //access the original histogram
+  const  char * finalallhistograms="ROOT_FILES/final_allhistogram.root";
+  char  file_estimated_parameters[]="DATA/finalestimates.dat"; //file storing the estimated parameters for fit
+  char  outputfile[] ="DATA/finalEnergyerror.dat"; //Output file to store A,u,6,eA,eu,e6
   const  int peakNo=23;
   const  int column=6;
   int row=peakNo/column+1;
@@ -16,10 +16,10 @@
   double secondLimit[peakNo]={};
 
   //Checking if data file with estimated parameters are opened
-  ifstream datafile(file_estimated_parameters); //File containing the estimated fit parameters
+  ifstream datafile(estimated_parameters); //File containing the estimated fit parameters
   if(datafile.is_open())
 	{
-	  cout<<" File reading for estimated parameters is done successfully from the file "<<file_estimated_parameters<<endl;
+	  cout<<" File reading for estimated parameters is done successfully from the file "<<estimated_parameters<<endl;
 	  int peakCount=0;
 	  while(peakCount<=peakNo)
 		{
@@ -38,12 +38,12 @@
   TCanvas *c = new TCanvas("c","Histogram",500,700);
   c->SetGrid();
   c->Divide(column,row);
-  TFile *file=new TFile(allhistogramsfile,"RECREATE");
+  TFile *file=new TFile(finalallhistograms,"RECREATE");
   //checking if Tfile is opened scuccessfully
-  if(file->IsOpen())cout<<"Successfully created a file "<<allhistogramsfile<< " to store all histograms with fit"<<endl;
+  if(file->IsOpen())cout<<"Successfully created a file "<<finalallhistograms<< " to store all histograms with fit"<<endl;
   else
     {
-	cout<<"Unable to open the file "<<allhistogramsfile<< endl;
+	cout<<"Unable to open the file "<<finalallhistograms<< endl;
 	return 0;
     }
   //array for histogram and functions
@@ -51,8 +51,8 @@
   TH1F * h[peakNo];
 
   //Checking if TFiles is opened successfully
-  TFile *MyFile = new TFile(filename,"READ");
-  if(MyFile->IsOpen())cout<<filename<<" file opened successfully\n";
+  TFile *MyFile = new TFile(filname,"READ");
+  if(MyFile->IsOpen())cout<<filname<<" file opened successfully\n";
   TH1F *his = (TH1F*)MyFile->Get("histo"); //histo is the name of histogram stored in MyFile
   
   for(int i=0;i<peakNo;i++)

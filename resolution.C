@@ -1,7 +1,7 @@
 {
   //Data file containing final errors and parameters
-  char  dataafile[]="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/finalEnergyerror.dat";//A,mean,sigma,error in A,error in mean, error in sigma,N
-  char pdfresoluton[]="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/PLOTS/resolutionplot.pdf"; //pdf file to save the plot
+  char  dataafile[]="DATA/finalEnergyerror.dat";//A,mean,sigma,error in A,error in mean, error in sigma,N
+  char pdfresoluton[]="PLOTS/resolutionplot.pdf"; //pdf file to save the plot
   ifstream inputres(dataafile);
   if(inputres.is_open())
     {
@@ -16,16 +16,16 @@
   c->SetGrid();
   c->SetFillColor(29);
   TGraphErrors *graph_expected=new TGraphErrors(dataafile,"%*lg%lg%lg%*lg%lg%lg%*lg","");//A,mean,sigma,error in A,error in mean, error in sigma,N
-  graph_expected->SetTitle("Energy Resolution plot;E/#mu(eV);(#sigma);");
-  graph_expected->SetMarkerColor(4);
-  graph_expected->SetMarkerStyle(21);
-  graph_expected->SetLineColor(9);
-  graph_expected->SetLineWidth(2);
-  graph_expected->Draw("AP");
-  graph_expected->Fit("pol1");
-  graph_expected->GetFunction("pol1")->SetLineStyle(2);
-  graph_expected->GetFunction("pol1")->SetParName(0,"Intercept(p_{0})");
-  graph_expected->GetFunction("pol1")->SetParName(1,"Slope(p_{1})");
+  expgraph->SetTitle("Energy Resolution plot;E(eV);(#sigma);");
+  expgraph->SetMarkerColor(4);
+  expgraph->SetMarkerStyle(21);
+  expgraph->SetLineColor(9);
+  expgraph->SetLineWidth(2);
+  expgraph->Draw("AP");
+  expgraph->Fit("pol1");
+  expgraph->GetFunction("pol1")->SetLineStyle(2);
+  expgraph->GetFunction("pol1")->SetParName(0,"Intercept(p_{0})");
+  expgraph->GetFunction("pol1")->SetParName(1,"Slope(p_{1})");
 
   c->GetFrame()->SetFillColor(21);
   c->GetFrame()->SetBorderSize(12);
@@ -36,8 +36,8 @@
 
   //Legend
   auto legend=new TLegend(0.1,0.8,0.3,0.9);//x1,y1,x2,y2
-  legend->AddEntry(graph_expected->GetFunction("pol1"),"#sigma=p_{0}+p_{1}E","l");
-  legend->AddEntry(graph_expected,"Graph with error bars","lep");//line,errorbars,polymarker
+  legend->AddEntry(expgraph->GetFunction("pol1"),"#sigma=p_{0}+p_{1}E","l");
+  legend->AddEntry(expgraph,"Graph with error bars","lep");//line,errorbars,polymarker
   gStyle->SetLegendFont(12);
   gStyle->SetLegendFillColor(7);
   legend->Draw();
@@ -45,14 +45,14 @@
 
   const int E=1332;
   cout<<fixed<<setprecision(8);
-  const double slope=graph_expected->GetFunction("pol1")->GetParameter(1);
+  const double slope=expgraph->GetFunction("pol1")->GetParameter(1);
   cout<<"slope = "<<slope<<endl;
-  const double intercept=graph_expected->GetFunction("pol1")->GetParameter(0);
+  const double intercept=expgraph->GetFunction("pol1")->GetParameter(0);
   cout<<"intercept = "<<intercept<<endl;
-  double sigma=slope*E+intercept;
-  double FWHM=2.355*sigma;
+  double sig=slope*E+intercept;
+  double FWHM=2.355*sig;
   cout<<fixed<<setprecision(3);
   cout<<"Corresponding to E = 1332 keV for (Co-60)): "<<endl;
-  cout<<"sigma = "<<sigma<<endl;
+  cout<<"sigma = "<<sig<<endl;
   cout<<"FWHM  = "<<FWHM<<endl;
 }
