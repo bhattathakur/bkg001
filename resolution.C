@@ -2,8 +2,8 @@
   //Data file containing final errors and parameters
   char  dataafile[]="DATA/finalEnergyerror.dat";//A,mean,sigma,error in A,error in mean, error in sigma,N
   char pdfresoluton[]="PLOTS/resolutionplot.pdf"; //pdf file to save the plot
-  const   char* finalresults="results_from_resolution.dat";//stores the results obtained form the resolution plot
-  const  char* savingtoroot="resolution.root";// saves the plot in the root file
+  const   char* finalresults="DATA/results_from_resolution.dat";//stores the results obtained form the resolution plot
+  const  char* savingtoroot="ROOT_FILES/resolution.root";// saves the plot in the root file
   ifstream inputres(dataafile);
   if(inputres.is_open())
     {
@@ -43,18 +43,30 @@
   gStyle->SetLegendFont(12);
   gStyle->SetLegendFillColor(7);
   leg->Draw();
-  c->SaveAs(pdfresoluton);//Using as the pdf file for the plot
 
+  c->SaveAs(pdfresoluton);//Using as the pdf file for the plot
   const int E=1332;
   cout<<fixed<<setprecision(8);
   const double slope=expgraph->GetFunction("pol1")->GetParameter(1);
+  const double slope_error=expgraph->GetFunction("pol1")->GetParError(1);
   cout<<"slope = "<<slope<<endl;
+  cout<<"slope error = "<<slope_error<<endl;
   const double intercept=expgraph->GetFunction("pol1")->GetParameter(0);
+  const double intercept_error=expgraph->GetFunction("pol1")->GetParError(0);
   cout<<"intercept = "<<intercept<<endl;
+  cout<<"intercept error = "<<intercept_error<<endl;
   double sig=slope*E+intercept;
   double FWHM=2.355*sig;
   cout<<fixed<<setprecision(3);
   cout<<"Corresponding to E = 1332 keV for (Co-60)): "<<endl;
   cout<<"sigma = "<<sig<<endl;
   cout<<"FWHM  = "<<FWHM<<endl;
+  /////////////////////Storing the Error and parameter error in a file////////////////////
+  ofstream resolution_error(finalresults);
+  if(resolution_error.is_open())
+    {
+	resolution_error<<setw(12)<<slope<<setw(12)<<slope_error<<setw(12)<<intercept<<setw(12)<<intercept_error<<endl;
+	cout<<"Successfully stored the m, dm , b and db in the file "<<finalresults<<endl;
+    }
+  else cout<<"Unable to open the file "<<finalresults<<endl;
 }
