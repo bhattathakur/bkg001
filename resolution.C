@@ -69,4 +69,8 @@
 	cout<<"Successfully stored the m, dm , b and db in the file "<<finalresults<<endl;
     }
   else cout<<"Unable to open the file "<<finalresults<<endl;
+  /* auto legg=new TLegend(0.8,0.2,0.95,0.4);
+  legg->AddEntry("#sigma =2.4 ");
+  legg->Draw();*/
+		     
 }

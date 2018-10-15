@@ -10,7 +10,7 @@
   TCanvas *can=new TCanvas();
 
   //Defining the histogram to will with random numbers
-  TH1F *  ranhis=new TH1F("ranhis","randomhistogram",TRIALS,0.5,1.5);
+  TH1F *  ranhis=new TH1F("ranhis","Histogram filled with Random resolution values",TRIALS,0.94,1.14);
 
   //Checking if the input file is open
   ifstream inputfromran(errors_fromresolution);
@@ -36,10 +36,11 @@
 	    ranhis->Fill(random_sigma);
 	    
 	  }
-	
+	ranhis->GetXaxis()->SetTitle("#sigma=m_{random}#times1332+b_{random}");
+	ranhis->GetYaxis()->SetTitle("Counts");
 	ranhis->Draw();
 	ranhis->Fit("gaus");
-	gStyle->SetOptFit(1011);
+	gStyle->SetOptFit(1111);
 	can->Update();
 	
 	
