@@ -2,6 +2,8 @@
   //Data file containing final errors and parameters
   char  dataafile[]="DATA/finalEnergyerror.dat";//A,mean,sigma,error in A,error in mean, error in sigma,N
   char pdfresoluton[]="PLOTS/resolutionplot.pdf"; //pdf file to save the plot
+  const * char finalresults="results_from_resolution.dat";//stores the results obtained form the resolution plot
+  const * char savingtoroot="resolution.root";// saves the plot in the root file
   ifstream inputres(dataafile);
   if(inputres.is_open())
     {
@@ -15,7 +17,7 @@
   c=new TCanvas();
   c->SetGrid();
   c->SetFillColor(29);
-  TGraphErrors *graph_expected=new TGraphErrors(dataafile,"%*lg%lg%lg%*lg%lg%lg%*lg","");//A,mean,sigma,error in A,error in mean, error in sigma,N
+  TGraphErrors *expgraph=new TGraphErrors(dataafile,"%*lg%lg%lg%*lg%lg%lg%*lg","");//A,mean,sigma,error in A,error in mean, error in sigma,N
   expgraph->SetTitle("Energy Resolution plot;E(eV);(#sigma);");
   expgraph->SetMarkerColor(4);
   expgraph->SetMarkerStyle(21);
@@ -35,12 +37,12 @@
   c->Update();
 
   //Legend
-  auto legend=new TLegend(0.1,0.8,0.3,0.9);//x1,y1,x2,y2
-  legend->AddEntry(expgraph->GetFunction("pol1"),"#sigma=p_{0}+p_{1}E","l");
-  legend->AddEntry(expgraph,"Graph with error bars","lep");//line,errorbars,polymarker
+  auto leg=new TLegend(0.1,0.8,0.3,0.9);//x1,y1,x2,y2
+  leg->AddEntry(expgraph->GetFunction("pol1"),"#sigma=p_{0}+p_{1}E","l");
+  leg->AddEntry(expgraph,"Graph with error bars","lep");//line,errorbars,polymarker
   gStyle->SetLegendFont(12);
   gStyle->SetLegendFillColor(7);
-  legend->Draw();
+  leg->Draw();
   c->SaveAs(pdfresoluton);//Using as the pdf file for the plot
 
   const int E=1332;

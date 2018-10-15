@@ -87,7 +87,7 @@
 	// Set height of stat-box (fraction of pad size)
 	c1->Update();
 	c1->Modified();
-     	file->cd();
+     	filee->cd();
 	//c->SaveAs(initialcanvaspdf);
 	h[i]->Write();
     }

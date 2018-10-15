@@ -43,7 +43,7 @@
   graph_expected->Write();
   c->Write();
   //c->Close();
-  ofstream outputgraph(filename);
+  ofstream outputgraph(filenamee);
   if(outputgraph.is_open())
    {
      outputgraph<<setw(10)<<  graph_expected->GetFunction("pol1")->GetParameter(0)<<setw(10)<<graph_expected->GetFunction("pol1")->GetParameter(1)<<endl;
@@ -51,7 +51,7 @@
    }
  else
    {
-     cout<<"Unable to open the file "<< fileename<<endl;
+     cout<<"Unable to open the file "<< filenamee<<endl;
      return 0;
    }
 } 
