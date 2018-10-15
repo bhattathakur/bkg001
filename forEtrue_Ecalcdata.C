@@ -1,8 +1,8 @@
 {
   //Data File contaiing estimated energy and true energy
-  char input1[]="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/initialEnergyerror.dat"; //estimated 
-  char input2[]="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/tabulated_energy.dat"; //true
-  char output[]="/home/Thakur.Bhatta/data9.24/dat/stability/bkg001/DATA/E_estandE_true.dat";
+  const char * input1="DATA/initialEnergyerror.dat"; //estimated 
+  const  char * input2="DATA/tabulated_energy.dat"; //true
+  const char * output="DATA/E_estandE_true.dat";//storing the data
   ifstream file1(input1);
   ifstream file2(input2);
   if(file1.is_open())
@@ -11,7 +11,7 @@
     }
   else
     {
-	cout<<"failed to open"<< file1<<endl;
+	cout<<"failed to open"<< input1<<endl;
 	return 0;
     }
   if(file2.is_open())
@@ -20,7 +20,7 @@
     }
   else
     {
-	cout<<"failed to open"<< file2<<endl;
+	cout<<"failed to open"<< input2<<endl;
 	return 0;
     }
   double amplitude,mean,sigma,errorAmp,errorMean,errorSigma,N;  //input1
