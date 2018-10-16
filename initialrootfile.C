@@ -1,4 +1,5 @@
 //Energy calibration function....:      0.15448454 keV +     0.38903224 keV/chn
+//Energy calibration function....:      0.15448454 keV +     0.38903224 keV/chn-bkg 3 energy calibration function
 {
   double b1=0.15448454;
   double m1=0.38903224;
